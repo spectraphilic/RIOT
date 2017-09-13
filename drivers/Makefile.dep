@@ -40,6 +40,10 @@ ifneq (,$(filter cc110%,$(USEMODULE)))
   USEMODULE += cc110x
 endif
 
+ifneq (,$(filter cc1200,$(USEMODULE)))
+  USEMODULE += cc1200
+endif
+
 ifneq (,$(filter ccs811_%,$(USEMODULE)))
   USEMODULE += ccs811
 endif

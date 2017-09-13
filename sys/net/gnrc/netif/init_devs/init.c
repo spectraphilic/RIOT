@@ -57,6 +57,11 @@ void gnrc_netif_init_devs(void)
         auto_init_cc110x();
     }
 
+    if (IS_USED(MODULE_CC1200)) {
+        extern void auto_init_cc1200(void);
+        auto_init_cc1200();
+    }
+
     if (IS_USED(MODULE_CC2420)) {
         extern void auto_init_cc2420(void);
         auto_init_cc2420();
