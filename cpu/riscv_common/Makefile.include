@@ -1,5 +1,6 @@
 CFLAGS += -Wno-pedantic
 INCLUDES += -I$(RIOTCPU)/riscv_common/include
+INCLUDES += -I$(RIOTCPU)/riscv_common/include/vendor
 
 TOOLCHAINS_SUPPORTED = gnu llvm
 
