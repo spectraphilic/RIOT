@@ -226,10 +226,21 @@ extern "C" {
 #define ARDUINO_A15             ADC_LINE(15)
 #endif
 
-// A majority of the pins are NOT PCINTs, SO BE WARNED (i.e. you cannot use them as receive pins)
-// Only pins available for RECEIVE (TRANSMIT can be on any pin):
-// (I've deliberately left out pin mapping to the Hardware USARTs - seems senseless to me)
-// Pins: 10, 11, 12, 13,  50, 51, 52, 53,  62, 63, 64, 65, 66, 67, 68, 69
+#ifdef CPU_ATMEGA32U4
+
+// Comes from ArduinoCore-avr/variants/leonardo/pins_arduino.h (only renamed AX to ARDUINO_PIN_AX)
+// Applies to all ATmega32U4 CPUs
+
+#define digitalPinToPCICR(p)    ((((p) >= 8 && (p) <= 11) || ((p) >= 14 && (p) <= 17) || ((p) >= ARDUINO_PIN_A8 && (p) <= ARDUINO_PIN_A10)) ? (&PCICR) : ((uint8_t *)0))
+#define digitalPinToPCICRbit(p) 0
+#define digitalPinToPCMSK(p)    ((((p) >= 8 && (p) <= 11) || ((p) >= 14 && (p) <= 17) || ((p) >= ARDUINO_PIN_A8 && (p) <= ARDUINO_PIN_A10)) ? (&PCMSK0) : ((uint8_t *)0))
+#define digitalPinToPCMSKbit(p) ( ((p) >= 8 && (p) <= 11) ? (p) - 4 : ((p) == 14 ? 3 : ((p) == 15 ? 1 : ((p) == 16 ? 2 : ((p) == 17 ? 0 : (p - ARDUINO_PIN_A8 + 4))))))
+
+#define digitalPinToInterrupt(p) ((p) == 0 ? 2 : ((p) == 1 ? 3 : ((p) == 2 ? 1 : ((p) == 3 ? 0 : ((p) == 7 ? 4 : NOT_AN_INTERRUPT)))))
+
+#else
+
+// Comes from ArduinoCore-avr/variants/mega/pins_arduino.h
 
 #define digitalPinToPCICR(p)    ( (((p) >= 10) && ((p) <= 13)) || \
                                   (((p) >= 50) && ((p) <= 53)) || \
@@ -252,6 +263,8 @@ extern "C" {
                                 0 ) ) ) ) ) )
 
 #define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : ((p) >= 18 && (p) <= 21 ? 23 - (p) : NOT_AN_INTERRUPT)))
+
+#endif
 /** @} */
 
 #ifdef __cplusplus
