@@ -225,46 +225,6 @@ extern "C" {
 #define ARDUINO_A14             ADC_LINE(14)
 #define ARDUINO_A15             ADC_LINE(15)
 #endif
-
-#ifdef CPU_ATMEGA32U4
-
-// Comes from ArduinoCore-avr/variants/leonardo/pins_arduino.h (only renamed AX to ARDUINO_PIN_AX)
-// Applies to all ATmega32U4 CPUs
-
-#define digitalPinToPCICR(p)    ((((p) >= 8 && (p) <= 11) || ((p) >= 14 && (p) <= 17) || ((p) >= ARDUINO_PIN_A8 && (p) <= ARDUINO_PIN_A10)) ? (&PCICR) : ((uint8_t *)0))
-#define digitalPinToPCICRbit(p) 0
-#define digitalPinToPCMSK(p)    ((((p) >= 8 && (p) <= 11) || ((p) >= 14 && (p) <= 17) || ((p) >= ARDUINO_PIN_A8 && (p) <= ARDUINO_PIN_A10)) ? (&PCMSK0) : ((uint8_t *)0))
-#define digitalPinToPCMSKbit(p) ( ((p) >= 8 && (p) <= 11) ? (p) - 4 : ((p) == 14 ? 3 : ((p) == 15 ? 1 : ((p) == 16 ? 2 : ((p) == 17 ? 0 : (p - ARDUINO_PIN_A8 + 4))))))
-
-#define digitalPinToInterrupt(p) ((p) == 0 ? 2 : ((p) == 1 ? 3 : ((p) == 2 ? 1 : ((p) == 3 ? 0 : ((p) == 7 ? 4 : NOT_AN_INTERRUPT)))))
-
-#else
-
-// Comes from ArduinoCore-avr/variants/mega/pins_arduino.h
-
-#define digitalPinToPCICR(p)    ( (((p) >= 10) && ((p) <= 13)) || \
-                                  (((p) >= 50) && ((p) <= 53)) || \
-                                  (((p) >= 62) && ((p) <= 69)) ? (&PCICR) : ((uint8_t *)0) )
-
-#define digitalPinToPCICRbit(p) ( (((p) >= 10) && ((p) <= 13)) || (((p) >= 50) && ((p) <= 53)) ? 0 : \
-                                ( (((p) >= 62) && ((p) <= 69)) ? 2 : \
-                                0 ) )
-
-#define digitalPinToPCMSK(p)    ( (((p) >= 10) && ((p) <= 13)) || (((p) >= 50) && ((p) <= 53)) ? (&PCMSK0) : \
-                                ( (((p) >= 62) && ((p) <= 69)) ? (&PCMSK2) : \
-                                ((uint8_t *)0) ) )
-
-#define digitalPinToPCMSKbit(p) ( (((p) >= 10) && ((p) <= 13)) ? ((p) - 6) : \
-                                ( ((p) == 50) ? 3 : \
-                                ( ((p) == 51) ? 2 : \
-                                ( ((p) == 52) ? 1 : \
-                                ( ((p) == 53) ? 0 : \
-                                ( (((p) >= 62) && ((p) <= 69)) ? ((p) - 62) : \
-                                0 ) ) ) ) ) )
-
-#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : ((p) >= 18 && (p) <= 21 ? 23 - (p) : NOT_AN_INTERRUPT)))
-
-#endif
 /** @} */
 
 #ifdef __cplusplus
