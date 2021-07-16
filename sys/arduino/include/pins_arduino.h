@@ -23,6 +23,20 @@
   (see ArduinoCore-avr/variants/.../pins_arduino.h)
 */
 
+/**
+ * @ingroup    sys_arduino
+ * @{
+ *
+ * @file
+ * @brief      Macros for compatibility with Arduino
+ */
+
+#ifndef PINS_ARDUINO_H
+#define PINS_ARDUINO_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #if defined(BOARD_ARDUINO_LEONARDO)
 
@@ -119,3 +133,10 @@
 
 
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* PINS_ARDUINO_H */
+/** @} */
