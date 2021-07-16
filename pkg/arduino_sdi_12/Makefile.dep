@@ -1,2 +1,1 @@
-USEMODULE += arduino
-USEMODULE += arduino_vendor
+USEPKG += arduino_api
